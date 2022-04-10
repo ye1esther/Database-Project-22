@@ -1,20 +1,20 @@
-import pandas as pd 
-import numpy as np 
+import pandas as pd
 import os
 
-data_dir = os.getcwd()
-netflix_data = 'dataset/netflix_titles.csv'
-netflix = pd.read_csv(os.path.normcase(os.path.join(data_dir, netflix_data)))
+netflix = pd.read_csv(os.path.join(os.path.dirname(__file__), "../dataset/netflix-titles.csv"))
+
+
 print(netflix)
-#read in netflix data 
-##netflix = pd.read_csv(r'C:\Users\kyoungjin\Desktop\database_project\Spring-22-Database-Project\dataset\netflix_titles.csv')
-
-#r'C:\Users\aiLab\Desktop\example.csv'
 
 
-#print(netflix)
-#columns to drop: director, cast 
-#to_drop = ['director','cast']
-#netflix.dropna(to_drop, how = 'all', inplace=True)
+# Defines a list that contains the names of all the columns we want to drop.
+to_drop = ['director','cast', 'listed_in', 'description']
 
-#netflix.to_csv('preprocessed_netflix.csv', index = False) 
+# Removes the columns included in the to_drop list
+netflix.drop(to_drop, axis = 1, inplace = True)
+
+# Removes the rows that contains NULL values.
+netflix.dropna()
+
+# Writes this cleaned data to a new csv file 
+netflix.to_csv('preprocessed_netflix.csv', index = False) 
