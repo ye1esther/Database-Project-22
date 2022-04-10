@@ -1,4 +1,4 @@
-show_id,type,title,country,date_added,release_year,rating,duration
+show_id,type,title,released_country,date_added,release_year,rating,duration
 s1,Movie,Dick Johnson Is Dead,United States,"September 25, 2021",2020,PG-13,90 min
 s2,TV Show,Blood & Water,South Africa,"September 24, 2021",2021,TV-MA,2 Seasons
 s3,TV Show,Ganglands,,"September 24, 2021",2021,TV-MA,1 Season
