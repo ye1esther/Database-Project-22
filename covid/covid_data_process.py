@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import csv 
 
-
+# covid data url: https://github.com/owid/covid-19-data/blob/master/public/data/latest/owid-covid-latest.csv
 covid = pd.read_csv(os.path.join(os.path.dirname(__file__), "../dataset/owid-covid-latest.csv"))
 
 # list of columns we want to drop 
