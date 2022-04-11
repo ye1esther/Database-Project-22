@@ -16,26 +16,15 @@ netflix.rename(columns={'country': 'released_country'}, inplace=True)
 # Removes the rows that contains NULL values.
 netflix.dropna(inplace=True)
 
-# def convert(date):
-#     date = datetime.datetime.strptime(date, '%B %d, %Y').strftime('%Y-%m-%d')
-#     return;
-
-# series = pd.Series(['20010101', '20010331'])
-# >>> dates = pd.to_datetime(series, format='%Y%m%d')
-# >>> dates.dt.strftime('%Y-%m-%d')
-
+# Removes any leading whitespace in 'date_added'
 netflix['date_added'] = netflix['date_added'].str.strip()
+
+# Converts month day, year format to yyyy-mm-dd format
 dates = pd.to_datetime(netflix['date_added'], format = '%B %d, %Y')
 netflix['date_added'] = dates.dt.strftime('%Y-%m-%d')
 
-
-    # netflix['date_added'] = netflix['date_added'].apply(convert)
-
-
-
 # Writes this cleaned data to a new csv file 
 netflix.to_csv('preprocessed_netflix.csv', index = False) 
-
 
 csv_file = r'preprocessed_netflix.csv'
 txt_file = r'netflix.txt'
@@ -44,4 +33,3 @@ with open(txt_file, "w") as my_output_file:
         reader = csv.reader(my_input_file)
         [my_output_file.write(",".join(row)+'\n') for row in reader]
         my_output_file.close()
-
