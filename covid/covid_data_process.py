@@ -34,6 +34,9 @@ covid.rename(columns=covid_rename, inplace = True)
 # remove null rows 
 covid.dropna(inplace=True)
 
+# create new column that will serve as a primary key in sql 
+covid['record_id'] = covid[['country','record_date']].agg(' '.join, axis=1) 
+
 # store preprocessed data into a new csv file
 covid.to_csv('preprocessed_covid.csv', index = False)
 
@@ -41,5 +44,5 @@ covid.to_csv('preprocessed_covid.csv', index = False)
 with open(r'covid.txt', "w") as text_output_file: 
     with open(r'preprocessed_covid.csv', "r") as csv_input_file: 
         for row in csv.reader(csv_input_file):
-            text_output_file.write(" ".join(row)+'\n')
+            text_output_file.write(",".join(row)+'\n')
     text_output_file.close()
