@@ -14,7 +14,7 @@ netflix.drop(to_drop, axis = 1, inplace = True)
 netflix.rename(columns={'country': 'released_country'}, inplace=True) 
 
 # Removes the rows that contains NULL values.
-netflix.dropna()
+netflix.dropna(inplace=True)
 
 # Writes this cleaned data to a new csv file 
 netflix.to_csv('preprocessed_netflix.csv', index = False) 
@@ -25,7 +25,6 @@ txt_file = r'netflix.txt'
 with open(txt_file, "w") as my_output_file:
     with open(csv_file, "r") as my_input_file:
         reader = csv.reader(my_input_file)
-        next(reader)  # skip the header
-        [ my_output_file.write(" ".join(row)+'\n') for row in reader]
+        [my_output_file.write(",".join(row)+'\n') for row in reader]
         my_output_file.close()
 
