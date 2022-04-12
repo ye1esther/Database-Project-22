@@ -23,6 +23,7 @@ netflix['date_added'] = netflix['date_added'].str.strip()
 dates = pd.to_datetime(netflix['date_added'], format = '%B %d, %Y')
 netflix['date_added'] = dates.dt.strftime('%Y-%m-%d')
 
+# Leaves only first country name in the column 'released_country' which is a multivalued attribute
 netflix['released_country'] = netflix['released_country'].str.split(', ').str[0]
 
 # Writes this cleaned data to a new csv file 
