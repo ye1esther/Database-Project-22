@@ -23,6 +23,8 @@ netflix['date_added'] = netflix['date_added'].str.strip()
 dates = pd.to_datetime(netflix['date_added'], format = '%B %d, %Y')
 netflix['date_added'] = dates.dt.strftime('%Y-%m-%d')
 
+netflix['released_country'] = netflix['released_country'].str.split(', ').str[0]
+
 # Writes this cleaned data to a new csv file 
 netflix.to_csv('preprocessed_netflix.csv', index = False) 
 
