@@ -18,6 +18,9 @@ to_drop = ['type','title','country','date_added','release_year','rating','durati
 # Removes the columns included in the to_drop list
 merged.drop(to_drop, axis = 1, inplace = True)
 
+# remove null rows 
+merged.dropna(inplace=True)
+
 merged.to_csv("preprocessed_influenced_by.csv", index=False)
 
 csv_file = r'preprocessed_influenced_by.csv'
