@@ -16,6 +16,8 @@ Due to this change, we had some modification on our ER diagram. Also, when creat
 - Content: data table with content information on Netflix 
 - Financial: data table with Netflix Quarterly Income Statement 
 - Influenced_by: data table relating Covd & Content 
+- * Note: when creating a table for netflix data, we named the table as Content instead of Netflix so it corresponds to our ER diagram
+
 #### 3. Influenced_by relation 
 From our ER diagram, two entities are in a strong-entity relation: Content and Covid. Besides three entities, we have also initiated a table called ‘Influenced_by’ relation as well. Instead of creating it directly from a .sql file, we created a separate ‘influenced_by’ txt just as we did for the three other entities. Here are the steps: 
 the big idea here is that we merged two (Content, Covid) csv files in the preprocessing stage (cross join Content, Covid on two matching datafields): 
