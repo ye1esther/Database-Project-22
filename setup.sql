@@ -4,6 +4,11 @@ Yewon Shin (yshin31)
 Kyoungjin Lim (klim30)
 */ 
 
+DROP TABLE IF EXISTS Covid;
+DROP TABLE IF EXISTS Content;
+DROP TABLE IF EXISTS Financial;
+
+DROP TABLE IF EXISTS Influenced_by;
 
 CREATE TABLE Covid ( 
 

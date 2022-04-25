@@ -99,6 +99,15 @@
         FROM Content
         WHERE date_added = (SELECT MAX(date_added) FROM Content);
         
+        
+        
+-- Question 11. How many movies were released in 2020 that were produced in France?
+
+        SELECT COUNT(show_id)
+        FROM Content 
+        WHERE released_country LIKE '%France' AND release_year = 2020; 
+
+        
 -- Question 12. How many Netflix movies were added in months that had over 250,000 daily cases in the US? 
         
         WITH Covid_record AS (
@@ -111,6 +120,23 @@
         FROM Content, Covid_record
         WHERE Content.type LIKE '%Movie%' AND MONTH(Content.date_added) = MONTH(Covid_record.record_date) 
               AND YEAR(Content.date_added) = YEAR(Covid_record.record_date);
+
+
+-- Question 13. How many Netflix TVshows were added to Neflix in a month that had over 8,000 daily cases in France in 2020? 
+-- if multiple months, then list ... 
+-- first find out months that had over 
+   
+   WITH selected_month AS (
+   SELECT DISTINCT(MONTH(record_date)) AS Month_over, country 
+   FROM Covid 
+   WHERE country LIKE '%France%' AND YEAR(record_date) = '2020' AND new_case > 8000) 
+   
+   SELECT COUNT(show_id) as 'number of TV shows', MONTH(date_added) AS 'month added to Netflix' 
+   FROM Content, selected_month
+   WHERE Content.type LIKE '%TV Show%' AND released_country LIKE '%FRANCE%' AND Year(date_added) = '2020' AND Month(date_added) = Month_over
+   GROUP BY MONTH(date_added)
+   ORDER BY COUNT(show_id) DESC; 
+   
 
 -- Question 14. What was the net income of Netflix when the daily new confirmed cases exceeded 12,000 daily 
 -- cases at least for a day in a quarter in the US? Please list the income statement's filed date and the 
@@ -138,6 +164,11 @@
         WHERE MONTH(Financial.filing_quarter_id) = MONTH(Covid_record.record_date) 
               AND YEAR(Financial.filing_quarter_id) = YEAR(Covid_record.record_date);
 
+-- Question 15. What was the average quarterly net income of Netflix in 2021? (DECIMAL 2 PT CAST)
+        SELECT FORMAT(AVG(net_income),2) AS 'Average quarterly net income' 
+        FROM Financial 
+        WHERE YEAR(filing_quarter_id) = '2021'; 
+ 
 
 -- Question 16. Which country released the most number of TV shows in 2020? List the name of the country and the number of 
 -- TV shows they released.
@@ -151,6 +182,11 @@
         LIMIT 1;
                 
 
+-- Question 17. Which year did Netflix have maximum research and development expenses? + expense 
+        SELECT YEAR(filing_quarter_id) AS year, rd_expense AS 'research and development expenses' 
+        FROM Financial 
+        WHERE rd_expense = (SELECT MAX(rd_expense) FROM Financial); 
+
 -- Question 18. What was the average number of COVID-19 daily new cases in Italy in December of 2021?
 --  (impossible to compute the number of daily cases in a certain month)
         
@@ -159,6 +195,24 @@
         WHERE MONTH(record_date) = 12 AND YEAR(record_date) = 2021
               AND country LIKE '%Italy%';
 
+-- Question 19. How many Netflix TVShows were added to NETFLIX in a month that had maximum deaths per million due to COVID-19 in 2020, South Korea? 
+
+        -- first find out month that South Korea had max deaths in 2020 
+        -- what if multiple months? -> distinct 
+        WITH Max_Deaths AS (
+                SELECT DISTINCT MONTH(record_date) AS record_month, new_deaths_per_million 
+                FROM Covid 
+                WHERE country LIKE '%South Korea%' AND new_deaths_per_million = 
+                                                (SELECT MAX(new_deaths_per_million) 
+                                                FROM Covid 
+                                                WHERE country LIKE '%South Korea%' AND YEAR(record_date) = '2020') 
+                                                AND YEAR(record_date) = '2020'
+                                                )
+        SELECT COUNT(show_id) AS 'Number of TV Shows', type, released_country, new_deaths_per_million, MONTH(Content.date_added) AS 'Month added to Netflix'
+        FROM Content, Max_Deaths 
+        WHERE type LIKE '%TV SHOW%' AND Content.released_country LIKE '%South Korea%' AND YEAR(Content.date_added) = '2020' AND MONTH(Content.date_added) = record_month
+        GROUP BY MONTH(Content.date_added)
+        ORDER BY COUNT(show_id) DESC;
         
 
 -- Question 20. What is the title of a Netflix movie with the shortest duration that was added to Netflix when 
