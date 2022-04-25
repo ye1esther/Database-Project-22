@@ -1,3 +1,4 @@
+
 -- Question 1. How many Netflix shows were released in 2020 that were streamed by 
 -- Netflix in the United States? 
 
@@ -235,4 +236,3 @@
         WHERE duration = (SELECT MIN(duration) FROM MINUTE WHERE type LIKE '%Movie%' AND MINUTE.date_added = Covid_record.record_date)
               AND MINUTE.date_added = Covid_record.record_date;
         
-
