@@ -1,0 +1,16 @@
+# Spring-22-Database-Project
+
+
+### partners 
+- Yewon Shin (yshin31) 
+- Kyoungjin Lim(klim30) 
+
+## 
+
+1. Some modifications in our queries
+    - Question 8: Instead of asking how many Netflix movies were streamed in Netflix, we are asking how many Netflix movies were "added to" Netflix
+    - Question 12: The originial question asked how many Netflix movies were released in a month that had over 12,000 daily cases in the US. We changed the number of cases to 250,000 after finding out that it was in fact every month of a year that had at least one day when the number of daily new cases exceeded 12,000 cases.
+    - Question 14: Same modification for Question 12 was applied to Question 14. 
+    - Question 16: The original question asked which country produced the most number of comedy shows in 2020. We modified the question so that it asks which country "released" the most number of "TV Shows" in 2020, instead.
+
+1. setup.sql earnings per share decrease decimal places by 2 so it corresponds to the dollar unit.
