@@ -27,7 +27,7 @@ CREATE TABLE Financial (
      revenue  Decimal(10,2), 
      rd_expense Decimal(10,2), 
      net_income Decimal(10,2), 
-     earnings_per_share Decimal(10,4), 
+     earnings_per_share Decimal(10,2), 
      PRIMARY KEY (filing_quarter_id) 
 );
 
@@ -52,19 +52,19 @@ Create Table Influenced_by (
   
 
 LOAD DATA LOCAL INFILE 
- '/Users/kyoungjin/Desktop/db/Spring-22-Database-Project/financial/quarterly_income_statement.txt' 
+ '/Users/esthershin/Spring-22-Database-Project/financial/quarterly_income_statement.txt' 
         into table Financial fields terminated by ',';
  
 LOAD DATA LOCAL INFILE 
-  '/Users/kyoungjin/Desktop/db/Spring-22-Database-Project/covid/covid.txt' 
+  '/Users/esthershin/Spring-22-Database-Project/covid/covid.txt' 
         into table Covid fields terminated by ',' ;
         
         
 LOAD DATA LOCAL INFILE 
- '/Users/kyoungjin/Desktop/db/Spring-22-Database-Project/netflix/netflix.txt' 
+ '/Users/esthershin/Spring-22-Database-Project/netflix/netflix.txt' 
         into table Content fields terminated by ';';
         
         
 LOAD DATA LOCAL INFILE 
- '/Users/kyoungjin/Desktop/db/Spring-22-Database-Project/influenced_by.txt' 
+ '/Users/esthershin/Spring-22-Database-Project/influenced_by.txt' 
         into table Influenced_by fields terminated by ',';
