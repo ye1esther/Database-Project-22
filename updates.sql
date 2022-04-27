@@ -1,6 +1,5 @@
 
 -- Insertions
-
 -- Content Table
 
    INSERT INTO Content(show_id, type, title, released_country, date_added, release_year, rating, duration)
@@ -21,9 +20,6 @@
         FROM Content, Covid
         WHERE show_id = "s8809" AND Content.released_country = Covid.country;
 
-
--- Covid Table
-
 -- Financial Table 
 -- We are adding the most recent financial data reported by Netflix for the first quarter of 2022. 
 
@@ -31,6 +27,7 @@
    VALUES ("2022-03-31 00:00:00", 7867.77, 657.53, 1597.45, 3.53);
 
 -- Deletions
+
    DELETE FROM Covid 
    WHERE Covid.country LIKE "%World%";
    

@@ -1,26 +1,26 @@
 
--- Question 1. How many Netflix shows were released in 2020 that were streamed by 
+-- Query 1. How many Netflix shows were released in 2020 that were streamed by 
 -- Netflix in the United States? 
 
         SELECT COUNT(show_id)
         FROM Content
         WHERE release_year = 2020 AND released_country LIKE '%United States%';
         
--- Question 2. What was the average number of daily new confirmed Covid-19 cases in the 
+-- Query 2. What was the average number of daily new confirmed Covid-19 cases in the 
 -- United States between January 2021 and May 2021? 
 
         SELECT AVG(new_case)
         FROM Covid
         WHERE country LIKE '%United States%' AND record_date > '2021-01-01 00:00:00' AND record_date < '2021-05-31 00:00:00';
      
--- Question 3. Which quarter of 2021 did Netflix record the highest earnings per share or highest revenue?
+-- Query 3. Which quarter of 2021 did Netflix record the highest earnings per share or highest revenue?
 
         SELECT filing_quarter_id
         FROM Financial
         WHERE earnings_per_share = (SELECT MAX(earnings_per_share) FROM Financial)
                 AND filing_quarter_id > '2021-01-01 00:00:00' AND filing_quarter_id < '2021-12-31 00:00:00';
                 
--- Question 4. Which country produced the most number of Netflix TV shows when the number of worldwide new 
+-- Query 4. Which country produced the most number of Netflix TV shows when the number of worldwide new 
 -- daily Covid-19 cases was greater than 18,000? 
 
         WITH Most_produce AS (
@@ -35,7 +35,7 @@
         FROM Covid, Most_produce
         WHERE Covid.new_case > 18000 AND Most_produce.country LIKE CONCAT('%', Covid.country, '%');
         
- -- Question 5. What was the most prevalent TV rating of Netflix movies that were released in 2019? 
+ -- Query 5. What was the most prevalent TV rating of Netflix movies that were released in 2019? 
  
         SELECT rating
         FROM Content
@@ -44,13 +44,13 @@
         ORDER BY COUNT (show_id) DESC
         LIMIT 1;
         
- -- Question 6.  What was the total net income of Netflix in the first two quarters of 2020?
+ -- Query 6.  What was the total net income of Netflix in the first two quarters of 2020?
  
         SELECT SUM (net_income)
         FROM Financial
         WHERE filing_quarter_id > '2020-01-01 00:00:00' AND filing_quarter_id < '2020-06-30 11:59:59';
         
--- Question 7.  In which month(s) of 2021 did the United States record the highest number of deaths per million people?
+-- Query 7.  In which month(s) of 2021 did the United States record the highest number of deaths per million people?
         
         SELECT MONTH(record_date)
         FROM Covid
@@ -58,7 +58,7 @@
         AND record_date > '2021-01-01 00:00:00' AND record_date < '2021-12-31 00:00:00';
 
         
- -- Question 8. How many Netflix movies were streamed in 2020 and 2021 in a country that had the highest number 
+ -- Query 8. How many Netflix movies were streamed in 2020 and 2021 in a country that had the highest number 
  -- of daily cases in the same period?
         
         
@@ -79,7 +79,7 @@
         AND date_added > '2020-01-01 00:00:00' AND date_added < '2021-12-31 11:59:59';
         
         
--- Question 9. What are the titles of a Netflix movie with the longest duration that was released in 2021?
+-- Query 9. What are the titles of a Netflix movie with the longest duration that was released in 2021?
         
         
         DROP VIEW IF EXISTS MINUTE; 
@@ -94,7 +94,7 @@
         AND release_year = 2021
         ORDER BY title ASC;
  
--- Question 10. What was the most recent movie added on Netflix? 
+-- Query 10. What was the most recent movie added on Netflix? 
 
         SELECT title
         FROM Content
@@ -102,14 +102,14 @@
         
         
         
--- Question 11. How many movies were released in 2020 that were produced in France?
+-- Query 11. How many movies were released in 2020 that were produced in France?
 
         SELECT COUNT(show_id)
         FROM Content 
         WHERE released_country LIKE '%France' AND release_year = 2020; 
 
         
--- Question 12. How many Netflix movies were added in months that had over 250,000 daily cases in the US? 
+-- Query 12. How many Netflix movies were added in months that had over 250,000 daily cases in the US? 
         
         WITH Covid_record AS (
                 SELECT DISTINCT record_date
@@ -123,7 +123,7 @@
               AND YEAR(Content.date_added) = YEAR(Covid_record.record_date);
 
 
--- Question 13. How many Netflix TVshows were added to Neflix in a month that had over 8,000 daily cases in France in 2020? 
+-- Query 13. How many Netflix TVshows were added to Neflix in a month that had over 8,000 daily cases in France in 2020? 
 -- if multiple months, then list ... 
 -- first find out months that had over 
    
@@ -139,13 +139,13 @@
    ORDER BY COUNT(show_id) DESC; 
            
 
--- Question 15. What was the average quarterly net income of Netflix in 2021? (DECIMAL 2 PT CAST)
+-- Query 15. What was the average quarterly net income of Netflix in 2021? (DECIMAL 2 PT CAST)
         SELECT FORMAT(AVG(net_income),2) AS 'Average quarterly net income' 
         FROM Financial 
         WHERE YEAR(filing_quarter_id) = '2021'; 
  
 
--- Question 16. Which country released the most number of TV shows in 2020? List the name of the country and the number of 
+-- Query 16. Which country released the most number of TV shows in 2020? List the name of the country and the number of 
 -- TV shows they released.
 
   
@@ -157,12 +157,12 @@
         LIMIT 1;
                 
 
--- Question 17. Which year did Netflix have maximum research and development expenses? + expense 
+-- Query 17. Which year did Netflix have maximum research and development expenses? + expense 
         SELECT YEAR(filing_quarter_id) AS year, rd_expense AS 'research and development expenses' 
         FROM Financial 
         WHERE rd_expense = (SELECT MAX(rd_expense) FROM Financial); 
 
--- Question 18. What was the average number of COVID-19 daily new cases in Italy in December of 2021?
+-- Query 18. What was the average number of COVID-19 daily new cases in Italy in December of 2021?
 --  (impossible to compute the number of daily cases in a certain month)
         
         SELECT AVG(new_case) AS 'Average number of daily new cases'
@@ -170,7 +170,7 @@
         WHERE MONTH(record_date) = 12 AND YEAR(record_date) = 2021
               AND country LIKE '%Italy%';
 
--- Question 19. How many Netflix TVShows were added to NETFLIX in a month that had maximum deaths per million due to COVID-19 in 2020, South Korea? 
+-- Query 19. How many Netflix TVShows were added to NETFLIX in a month that had maximum deaths per million due to COVID-19 in 2020, South Korea? 
 
         -- first find out month that South Korea had max deaths in 2020 
         -- what if multiple months? -> distinct 
@@ -190,7 +190,7 @@
         ORDER BY COUNT(show_id) DESC;
         
 
--- Question 20. What is the title of a Netflix movie with the shortest duration that was added to Netflix when 
+-- Query 20. What is the title of a Netflix movie with the shortest duration that was added to Netflix when 
 -- COVID-19 daily cases in Japan was over 10,000? 
 
         DROP VIEW IF EXISTS MINUTE; 
@@ -208,5 +208,7 @@
         SELECT title, date_added, duration
         FROM MINUTE, Covid_record
         WHERE duration = (SELECT MIN(duration) FROM MINUTE WHERE MINUTE.date_added = Covid_record.record_date)
-              AND MINUTE.date_added = Covid_record.record_date;
+              AND MINUTE.date_added = Covid_record.record_date
+        ORDER BY duration ASC
+        LIMIT 1;
         

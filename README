@@ -7,13 +7,12 @@
 
 ## 
 
-1. Some modifications in our queries
+1. Somqe modifications in our questions from Phase B
     - Question 8: Instead of asking how many Netflix movies were streamed in Netflix, we are asking how many Netflix movies were "added to" Netflix
     - Question 12: The originial question asked how many Netflix movies were released in a month that had over 12,000 daily cases in the US. We changed the number of cases to 250,000 after finding out that it was in fact every month of a year that had at least one day when the number of daily new cases exceeded 12,000 cases.
     - Question 13: Instead of asking How many Netflix TV shows 'released in a month ..', we decided to change it into 'added to Netflix'. Our Content data only has 'released_year', so we cannot extract month from it. Also, we have specified the year as '2020'.
-    - Question 14: Same modification for Question 12 was applied to Question 14. 
     - Question 15: We have added to format the averages into two decimal places.
     - Question 16: The original question asked which country produced the most number of comedy shows in 2020. We modified the question so that it asks which country "released" the most number of "TV Shows" in 2020, instead.
     - Question 17: Same reason as Question 12, we also changed the question to ask about 'date added to Netflix' instead of 'released date'. 
 
-1. setup.sql earnings per share decrease decimal places by 2 so it corresponds to the dollar unit.
+2. setup.sql earnings per share decrease decimal places by 2 so it corresponds to the dollar unit. 
