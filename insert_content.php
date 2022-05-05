@@ -17,7 +17,7 @@
         //open a connection to dbase server 
         include 'open.php';
 
-        if ($conn->query($sql) == TRUE) {
+        if ($conn->query($sql)) {
             echo "Inserted Data Successfully!";
         } else {
             echo "ERROR: ".$sql."<br>".$conn->error;
