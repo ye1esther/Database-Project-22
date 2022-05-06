@@ -4,7 +4,6 @@
         <h2> Insert</h2>
         <h3>You can insert data to tables here</h3>
         
-        <h2> Insert to Covid</h2>
 
 
         <h2> Insert to Content</h2>
@@ -36,10 +35,49 @@
             <br>
             <button type="submit" name="submit">Insert Data</button> 
             <br>
+        </form>
 
+        <h2> Insert to Covid</h2>
+        <form action="insert_covid.php" method="post">
+            <input type="text" name="country" placeholder="Country">
+
+            <br>
+            <input type="text" name="record_date" placeholder="Date recorded" pattern ="(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})"
+            oninvalid = "this.setCustomValidity('date_added should be formatted as yyyy-mm-dd hh:mm:ss, and it should be earlier than current time')"
+            oninput="this.setCustomValidity('')">
+            <br>
+            <input type="number" name="total_case" placeholder="total_case" min = "0">
+            <br>
+            <input type="number" name="new_case" placeholder="new_case" min = "0">
+            <br>
+            <input type="text" name="new_deaths_per_million" placeholder="new_deaths_per_million" pattern ="0\.[0-9][0-9]"
+            oninvalid = "this.setCustomValidity('new_deaths_per_million should be up to 2 decimal places, ranging greater than or equal to 0.00 and less than 1.00')"
+            oninput="this.setCustomValidity('')" >
+            <br>
+            <br>
+            <button type="submit" name="submit">Insert Data</button> 
+            <br>
+        </form>
 
         <h2> Insert to Financial</h2>
+        <form action="insert_financial.php" method="post">
 
+            <input type="text" name="filing_quarter_id" placeholder="filing_quarter_id" pattern ="(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})"
+            oninvalid = "this.setCustomValidity('filing_quarter_id should be formatted as yyyy-mm-dd hh:mm:ss, and it should be earlier than current time')"
+            oninput="this.setCustomValidity('')">
+            <br>
+            <input type="text" name="revenue" placeholder="revenue" min = "0">
+            <br>
+            <input type="rd_expense" name="net_income" placeholder="rd_expense" min = "0">
+            <br>
+            <input type="text" name="earnings_per_share" placeholder="new_deaths_per_million" pattern ="[0-9]\.[0-9][0-9][0-9][0-9]"
+            oninvalid = "this.setCustomValidity('earnings per share hould be up to 4 decimal places, greater than or equal to 0.00')"
+            oninput="this.setCustomValidity('')" >
+            <br>
+            <br>
+            <button type="submit" name="submit">Insert Data</button> 
+            <br>
+        </form>
 
     </body>
 
