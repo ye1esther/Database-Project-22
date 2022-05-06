@@ -5,23 +5,34 @@
         <h3>You can delete data from tables here</h3>
         
         <h2> Delete from Covid</h2>
-        <h3>Type in date and country you wish to delete</h3>
+        <h4>Type in date and country you wish to delete</h4>
         <form action="delete_covid.php" method="post">
         <input type="text" name="country" placeholder="Country">
         <br>
         <input type="text" name="record_date" placeholder="Record Date" pattern ="(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})"
         oninvalid = "this.setCustomValidity('record_date should be formatted as yyyy-mm-dd hh:mm:ss, and it should be earlier than current time')"
         oninput="this.setCustomValidity('')">
+        <button type="submit" name="submit">Delete Data</button> 
         <br>
+
+        <h2> Delete from Content</h2>
+        <h4>Type in Show ID you wish to delete</h4>
+        <form action="delete_content.php" method="post">
+        <input type="text" name="show_id" placeholder="Show ID" pattern = "s+[1-9]+[0-9]{0,}"
+        oninvalid = "this.setCustomValidity('show id must consist of a letter s followed by a positive integer larger than 1')"
+        oninput="this.setCustomValidity('')">
         <button type="submit" name="submit">Delete Data</button> 
         <br>
 
 
-        <h2> Delete from Content</h2>
-
-
         <h2> Delete from Financial</h2>
-
+        <h4>Type in the date the financial data was filed (filing quarter id) to delete</h4>
+        <form action="delete_financial.php" method="post">
+        <input type="text" name="filing_quarter_id" placeholder="Filing Quarter ID" pattern ="(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})"
+        oninvalid = "this.setCustomValidity('filing_quarter_id should be formatted as yyyy-mm-dd hh:mm:ss, and it should be earlier than current time')"
+        oninput="this.setCustomValidity('')">
+        <button type="submit" name="submit">Delete Data</button> 
+        <br>
 
     </body>
 
