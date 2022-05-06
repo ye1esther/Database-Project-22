@@ -1,0 +1,28 @@
+<html>
+    <body>
+
+        <h2> Delete</h2>
+        <h3>You can delete data from tables here</h3>
+        
+        <h2> Delete from Covid</h2>
+        <h3>Type in date and country you wish to delete</h3>
+        <form action="delete_covid.php" method="post">
+        <input type="text" name="country" placeholder="Country">
+        <br>
+        <input type="text" name="record_date" placeholder="Record Date" pattern ="(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})"
+        oninvalid = "this.setCustomValidity('record_date should be formatted as yyyy-mm-dd hh:mm:ss, and it should be earlier than current time')"
+        oninput="this.setCustomValidity('')">
+        <br>
+        <button type="submit" name="submit">Delete Data</button> 
+        <br>
+
+
+        <h2> Delete from Content</h2>
+
+
+        <h2> Delete from Financial</h2>
+
+
+    </body>
+
+</html>
