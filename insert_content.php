@@ -11,13 +11,18 @@
     $sql = "INSERT INTO Content(show_id, type, title, released_country, date_added, release_year, rating, duration)
     VALUES ('$show_id', '$type', '$title', '$released_country', '$date_added', '$release_year', '$rating', '$duration');";
 
+    $sql2 = "INSERT INTO Influenced_by
+                SELECT Content.show_id, Covid.record_id
+                FROM Content, Covid
+                WHERE show_id = '$show_id' AND Content.released_country = Covid.country;";
+
     if (!empty($show_id) || !empty($type) || !empty($title) || !empty($released_country) || !empty($date_added)
     || !empty($release_year) || !empty($rating) || !empty($duration)) {
 
         //open a connection to dbase server 
         include 'open.php';
 
-        if ($conn->query($sql)) {
+        if ($conn->query($sql) && $conn->query($sql2)) {
             echo "Inserted Data Successfully!";
         } else {
             echo "ERROR: ".$sql."<br>".$conn->error;
