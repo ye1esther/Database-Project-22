@@ -8,6 +8,17 @@
     $release_year = $_POST['release_year'];
     $rating = $_POST['rating'];
     $duration = $_POST['duration'];
+    
+    //separate input validation check for duration 
+    if ($type == 'TV Show' && strpos($duration, 'min') !== false) { 
+        echo "ERROR: Duration for TV Show must be in Seasons, not minutes. Please correct the error and try again.";
+        die();
+    }
+    else if ($type == 'Movie' && strpos($duration, 'Season') !== false) { 
+        echo "ERROR: Duration for Movie must be in min, not Seasons. Please correct the error and try again.";
+        die();
+    }
+
     $sql = "INSERT INTO Content(show_id, type, title, released_country, date_added, release_year, rating, duration)
     VALUES ('$show_id', '$type', '$title', '$released_country', '$date_added', '$release_year', '$rating', '$duration');";
 

@@ -13,7 +13,7 @@
     $sql2 = "INSERT INTO Influenced_by
                SELECT Content.show_id, Covid.record_id
                FROM Content, Covid
-               WHERE Covid.record_id = '$record_id' AND Content.released_country = Covid.country;";
+               WHERE Covid.record_id LIKE CONCAT('%','$record_id','%') AND Content.released_country = Covid.country;";
     if (!empty($country) || !empty($record_id) || !empty($total_case) || !empty($new_case) || !empty($new_deaths_per_million)
     || !empty($record_id) ) {
 
