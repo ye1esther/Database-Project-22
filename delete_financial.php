@@ -3,7 +3,7 @@
     $filing_quarter_id = $_POST['filing_quarter_id'];
     $sql = "DELETE FROM Financial WHERE filing_quarter_id = '$filing_quarter_id'";
 
-    if (!empty($show_id)) {
+    if (!empty($filing_quarter_id)) {
 
         //open a connection to dbase server 
         include 'open.php';
