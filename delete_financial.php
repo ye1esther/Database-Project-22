@@ -8,6 +8,15 @@
         //open a connection to dbase server 
         include 'open.php';
 
+        $valid = $conn->query("SELECT COUNT(*) AS c FROM Financial WHERE filing_quarter_id = '$filing_quarter_id'");
+        //extract result from query 
+        $row = $valid->fetch_assoc();
+
+        if ($row['c'] == '0') {
+            echo "ERROR: Record does not exist"; 
+            die(); 
+        }
+
         if ($conn->query($sql)) {
             echo "Deleted Data Successfully!";
         } else {
