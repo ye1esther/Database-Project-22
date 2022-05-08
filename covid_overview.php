@@ -36,10 +36,10 @@ var chart = new CanvasJS.Chart("chartContainer", {
     exportEnabled: true,
 	theme: "light2",
 	title:{
-		text: "COVID_19 New_Case Timeline"
+		text: "COVID_19 Data Timeline"
 	},
 	axisY: {
-		title: "Number of Cases"
+		title: "Number of Cases except for death data"
 	},
 	data: [{
 		type: "line",
