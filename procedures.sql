@@ -6,11 +6,11 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_1;
 
-CREATE PROCEDURE Query_1()
+CREATE PROCEDURE Query_1(IN rc VARCHAR(30))
 BEGIN
-    SELECT COUNT(show_id) AS 'Number of Shows'
-    FROM Content
-    WHERE release_year = 2020 AND released_country LIKE '%United States%';
+        SELECT COUNT(show_id) AS 'Number of Shows'
+        FROM Content
+        WHERE release_year = 2020 AND released_country LIKE CONCAT("%", rc, "%");
 END; //
 
 DELIMITER ;
