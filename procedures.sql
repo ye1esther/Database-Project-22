@@ -344,9 +344,9 @@ BEGIN
                                                 WHERE country LIKE '%South Korea%' AND YEAR(record_date) = '2020') 
                                                 AND YEAR(record_date) = '2020'
                                                 )
-        SELECT MONTH(Content.date_added) AS month, COUNT(show_id) AS showcount, released_country as rc, new_deaths_per_million as ndp
+        SELECT MONTH(Content.date_added) AS month, COUNT(show_id) AS showcount, new_deaths_per_million as ndp
         FROM Content, Max_Deaths 
-        WHERE type LIKE '%TV SHOW%' AND Content.released_country LIKE '%South Korea%' AND YEAR(Content.date_added) = '2020' AND MONTH(Content.date_added) = record_month
+        WHERE type LIKE '%TV SHOW%' AND YEAR(Content.date_added) = '2020' AND MONTH(Content.date_added) = record_month
         GROUP BY MONTH(Content.date_added)
         ORDER BY COUNT(show_id) DESC;
 

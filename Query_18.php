@@ -14,12 +14,11 @@
         // execute it, and if non-empty result, output each row of result
         if ($result = $conn->query("CALL Query_18();")) {
                 echo "<table border=\"2px solid black\">";
-                echo "<tr><td> Month</td><td> Number of Shows </td><td> released country </td><td> new deaths per million </td>";
+                echo "<tr><td> Month</td><td> Number of Shows added to Netflix</td><td> new deaths per million </td>";
                 foreach($result as $row){
                         echo "<tr>";
                         echo "<td>".$row["month"]."</td>";
                         echo "<td>".$row["showcount"]."</td>";
-                        echo "<td>".$row["rc"]."</td>";
                         echo "<td>".$row["ndp"]."</td>";
                         echo "</tr>";
 
