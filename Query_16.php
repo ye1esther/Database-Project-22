@@ -2,8 +2,6 @@
 <body>
 <?php
 
-// Yewon Shin
-// yshin31
 
 	//open a connection to dbase server 
 	include 'open.php';
