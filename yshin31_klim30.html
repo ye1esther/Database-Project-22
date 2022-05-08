@@ -39,6 +39,9 @@
 	<h3> Show the average number of daily new confirmed Covid-19 cases in the given country between January 2021 and May 2021 </h3>
 	
 	<form action="Query_2.php" method="post">
+		<ul>
+			<li>Country: Country where the record was collected from. First letter of the country should be upper-case: United States. </li>
+		  </ul>
 		<input type="text" name="country" placeholder="country">
 		<br>
 		<br>
@@ -155,6 +158,9 @@
 
 	<h2> Query 12</h2>
 	<h3> Show how many Netflix movies were added in months that had over the given number of (> 200,000) daily cases in the US</h3>
+	<ul>
+		<li>Number of cases: please enter number without comma (i.e. 18000 instead of 18,000)</li>
+	  </ul>
 	<form action="Query_12.php" method="post">
 		<input type="text" name="number" placeholder="number">
 		<br>
@@ -232,6 +238,9 @@
 	<h2> Query 18</h2>
 	<h3> Show how many Netflix TVShows were added to NETFLIX in a month that had maximum deaths per million due to COVID-19 in 2020 in the given country</h3>
 	<form action="Query_18.php" method="post">
+		<ul>
+			<li>Country: Country where the record was collected from. First letter of the country should be upper-case: United States. </li>
+		  </ul>
 		<input type="text" name="country" placeholder="country">
 		<br>
 		<br>
