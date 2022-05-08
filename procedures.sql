@@ -21,13 +21,13 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_2 //
 
-CREATE PROCEDURE Query_2()
+CREATE PROCEDURE Query_2(IN rc VARCHAR(30))
 
 BEGIN
 
         SELECT AVG(new_case) AS Average
         FROM Covid
-        WHERE country LIKE '%United States%' AND record_date > '2021-01-01 00:00:00' AND record_date < '2021-05-31 00:00:00';
+        WHERE country LIKE CONCAT("%", rc, "%") AND record_date > '2021-01-01 00:00:00' AND record_date < '2021-05-31 00:00:00';
 
 
 END; //
@@ -57,7 +57,7 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_4 //
 
-CREATE PROCEDURE Query_4()
+CREATE PROCEDURE Query_4() 
 BEGIN
 
        WITH Most_produce AS (
@@ -101,14 +101,26 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_6 //
 
-CREATE PROCEDURE Query_6()
-BEGIN
-        SELECT SUM(net_income) AS income 
-        FROM Financial
-        WHERE filing_quarter_id > '2020-01-01 00:00:00' AND filing_quarter_id < '2020-06-30 11:59:59';
-END; // 
+CREATE PROCEDURE Query_6(IN t VARCHAR(30))
 
-DELIMITER ;
+BEGIN 
+CASE 
+        WHEN t = 'net_income' THEN   
+                SELECT sum(net_income)
+                FROM Financial
+                WHERE filing_quarter_id > '2020-01-01 00:00:00' AND filing_quarter_id < '2020-06-30 11:59:59';
+        WHEN t = 'rd_expense' THEN 
+                SELECT sum(rd_expense)
+                FROM Financial
+                WHERE filing_quarter_id > '2020-01-01 00:00:00' AND filing_quarter_id < '2020-06-30 11:59:59';  
+        WHEN t = 'revenue' THEN
+                SELECT sum(revenue)
+                FROM Financial
+                WHERE filing_quarter_id > '2020-01-01 00:00:00' AND filing_quarter_id < '2020-06-30 11:59:59';
+        ELSE BEGIN END; 
+END CASE; 
+END;//
+
 
 -- Query 7
 
@@ -188,12 +200,12 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_10 //
 
-CREATE PROCEDURE Query_10()
+CREATE PROCEDURE Query_10(IN t VARCHAR(10))
 
 BEGIN
         SELECT title
         FROM Content
-        WHERE date_added = (SELECT MAX(date_added) FROM Content);
+        WHERE date_added = (SELECT MAX(date_added) FROM Content WHERE Content.type LIKE CONCAT('%', t, '%'));
 
 END; // 
 
@@ -220,13 +232,13 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_12 //
 
-CREATE PROCEDURE Query_12()
+CREATE PROCEDURE Query_12(IN num int(11))
 
 BEGIN
         WITH Covid_record AS (
                 SELECT DISTINCT record_date
                 FROM Covid
-                WHERE new_case > 250000 AND country LIKE '%United States%'
+                WHERE new_case > num AND country LIKE '%United States%'
                 )
         
         SELECT COUNT(Content.show_id) AS showcount
@@ -265,15 +277,14 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_14;
 
-CREATE PROCEDURE Query_14()
+CREATE PROCEDURE Query_14(IN yr VARCHAR(10))
 BEGIN
     SELECT FORMAT(AVG(net_income),2) AS 'Average quarterly net income' 
     FROM Financial 
-    WHERE YEAR(filing_quarter_id) = '2021'; 
+    WHERE YEAR(filing_quarter_id) = yr; 
 END; //
 
 DELIMITER ;
-
 -- Query 15
 
 DELIMITER //
@@ -297,15 +308,30 @@ DELIMITER ;
 
 -- Query 16
 
+
 DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_16;
 
-CREATE PROCEDURE Query_16()
-BEGIN
-    SELECT YEAR(filing_quarter_id) AS year, rd_expense AS 'research and development expenses' 
-    FROM Financial 
-    WHERE rd_expense = (SELECT MAX(rd_expense) FROM Financial); 
+CREATE PROCEDURE Query_16(IN t VARCHAR(30))
+
+
+BEGIN 
+CASE 
+        WHEN t = 'net_income' THEN   
+                   SELECT YEAR(filing_quarter_id) AS year
+                   FROM Financial 
+                   WHERE net_income = (SELECT MAX(net_income) FROM Financial); 
+        WHEN t = 'rd_expense' THEN 
+                SELECT YEAR(filing_quarter_id) AS year
+                FROM Financial 
+                WHERE rd_expense = (SELECT MAX(rd_expense) FROM Financial); 
+        WHEN t = 'revenue' THEN
+                SELECT YEAR(filing_quarter_id) AS year
+                FROM Financial 
+                WHERE revenue = (SELECT MAX(revenue) FROM Financial); 
+        ELSE BEGIN END; 
+END CASE; 
 END; //
 
 DELIMITER ;
@@ -334,29 +360,28 @@ DELIMITER ;
 DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_18 //
-CREATE PROCEDURE Query_18()
+CREATE PROCEDURE Query_18(IN c VARCHAR(30))
 BEGIN
 
 
        WITH Max_Deaths AS (
                 SELECT DISTINCT MONTH(record_date) AS record_month, new_deaths_per_million 
                 FROM Covid 
-                WHERE country LIKE '%South Korea%' AND new_deaths_per_million = 
+                WHERE country LIKE CONCAT('%', c, '%')AND new_deaths_per_million = 
                                                 (SELECT MAX(new_deaths_per_million) 
                                                 FROM Covid 
-                                                WHERE country LIKE '%South Korea%' AND YEAR(record_date) = '2020') 
+                                                WHERE country LIKE CONCAT('%', c, '%') AND YEAR(record_date) = '2020') 
                                                 AND YEAR(record_date) = '2020'
                                                 )
         SELECT MONTH(Content.date_added) AS month, COUNT(show_id) AS showcount, new_deaths_per_million as ndp
         FROM Content, Max_Deaths 
-        WHERE type LIKE '%TV SHOW%' AND YEAR(Content.date_added) = '2020' AND MONTH(Content.date_added) = record_month
+        WHERE type LIKE '%TV SHOW%' AND Content.released_country LIKE CONCAT('%', c, '%') AND YEAR(Content.date_added) = '2020' AND MONTH(Content.date_added) = record_month
         GROUP BY MONTH(Content.date_added)
         ORDER BY COUNT(show_id) DESC;
 
 
 END; // 
 DELIMITER ;
-
 -- Query 19
 
 DELIMITER //

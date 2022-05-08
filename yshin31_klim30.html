@@ -39,6 +39,9 @@
 	<h3> Show the average number of daily new confirmed Covid-19 cases in the given country between January 2021 and May 2021 </h3>
 	
 	<form action="Query_2.php" method="post">
+		<input type="text" name="country" placeholder="country">
+		<br>
+		<br>
 		<input type="submit" value="show">
 	</form>
 	<br>
@@ -61,6 +64,9 @@
 	<h2> Query 4</h2>
 	<h3> Show which country produced the most number of Netflix TV shows when the number of worldwide new daily Covid-19 cases was greater than given number ( > 10,000 cases) </h3>
 	<form action="Query_4.php" method="post">
+		<input type="text" name="number" placeholder="number">
+		<br>
+		<br>
 		<input type="submit" value="show">
 	</form>
 	<br>
@@ -79,8 +85,15 @@
 	<br>
 
 	<h2> Query 6</h2>
-	<h3> Show what was the total net income/revenue/R&D expense of Netflix in the first two quarters of 2020</h3>
+	<h3> Show what was the total net income/revenue/R&D expense of Netflix in the first two quarters of the given year</h3>
 	<form action="Query_6.php" method="post">
+		<select name="financial_type" id="">
+			<option value="net_income">net_income</option>
+			<option value="rd_expense">rd_expense</option>
+			<option value="revenue">revenue</option>		
+		</select>
+		<br> 
+		<br> 
 		<input type="submit" value = "show">
 	</form>
 
@@ -99,8 +112,11 @@
 	</form>
 
 	<h2> Query 8</h2>
-	<h3> Show How many Netflix movies were streamed in 2020 and 2021 in a country that had the highest number of daily cases in the same period</h3>
+	<h3> Show How many Netflix movies were streamed in 2020 and 2021 in a given country that had the highest number of daily cases in the same period</h3>
 	<form action="Query_8.php" method="post">
+		<input type="text" name="country" placeholder="country">
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
 
@@ -117,8 +133,14 @@
 	</form>
 
 	<h2> Query 10</h2>
-	<h3> Show what was the most recent movie added on Netflix</h3>
+	<h3> Show what was the most recent movie/TV Show added on Netflix</h3>
 	<form action="Query_10.php" method="post">
+		<select name="type" id="">
+			<option value="Movie">Movie</option>
+			<option value="TV Show">TV Show</option>
+		</select>
+		<br> 
+		<br> 
 		<input type="submit" value = "show">
 	</form>
 
@@ -138,6 +160,9 @@
 	<h2> Query 12</h2>
 	<h3> Show how many Netflix movies were added in months that had over the given number of (> 200,000) daily cases in the US</h3>
 	<form action="Query_12.php" method="post">
+		<input type="text" name="number" placeholder="number">
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
 
@@ -157,6 +182,13 @@
 	<h2> Query 14</h2>
 	<h3> Show what was the average quarterly net income of Netflix in the given year (2019/2020/2021)? (DECIMAL 2 PT CAST) </h3>
 	<form action="Query_14.php" method="post">
+		<select name="year" id="year">
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>		
+		</select>
+		<br> 
+		<br> 
 		<input type="submit" value = "show">
 	</form>
 
@@ -177,6 +209,13 @@
 	<h2> Query 16</h2>
 	<h3>  Which year did Netflix have maximum research and development expenses/net incomce/revenue? </h3>
 	<form action="Query_16.php" method="post">
+		<select name="type" id="type">
+			<option value="net_income">net_income</option>
+			<option value="rd_expense">rd_expense</option>
+			<option value="revenue">revenue</option>		
+		</select>
+		<br> 
+		<br> 
 		<input type="submit" value = "show">
 	</form>
 
@@ -197,6 +236,9 @@
 	<h2> Query 18</h2>
 	<h3> Show how many Netflix TVShows were added to NETFLIX in a month that had maximum deaths per million due to COVID-19 in 2020 in the given country</h3>
 	<form action="Query_18.php" method="post">
+		<input type="text" name="country" placeholder="country">
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
 
