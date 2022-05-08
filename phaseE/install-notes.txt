@@ -1,0 +1,12 @@
+
+Yewon Shin (yshin31) 
+Kyoungjin Lim (klim30) 
+
+Special instruction: 
+
+All of our stored procedures for queries are written in procedures.sql. 
+Please use the following mysql command to successfully run the stored procedures: 
+
+mysql -h dbase.cs.jhu.edu -u StaffUsername -D DBName -p < procedures.sql
+
+We utilized CanvasJS, so we haven’t implemented user access control.
