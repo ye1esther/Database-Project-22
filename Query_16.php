@@ -1,4 +1,4 @@
-<head><title>Query 17</title></head>
+<head><title>Query 16</title></head>
 <body>
 <?php
 
@@ -6,26 +6,71 @@
 	//open a connection to dbase server 
 	include 'open.php';
 
-	// echo some basic header info onto the page
-	echo "<h2>Which year did Netflix have maximum research and development expenses?</h2><br>";
 
+	ini_set('error_reporting', E_ALL);
+	ini_set('display_errors', true);
 
-       // call the stored procedure we already defined on dbase
-	   	$result = $conn->query("CALL Query_16();");
+	$type = $_POST['type'];
 
-			echo "<table border=\"2px solid black\">";
-			echo "<tr><td>Year</td><td>Research and Development Expenses</td></tr>";
-			foreach($result as $row){
-			echo "<tr>";
-			echo "<td>".$row["year"]."</td>";
-            echo "<td>".$row["research and development expenses"]."</td>";
-			echo "</tr>";
+    
+	echo "<h2> Which year did Netflix have $type?
+	</h2><br>";
+	if (empty($type)) {
+		echo "empty <br><br>";
+	
+	} else {
+	
+		echo $type."<br><br>";
+	
+		if ($stmt = $conn->prepare("CALL Query_16(?)")) {
+	
+
+		$stmt->bind_param("s", $type);
+	
+		if ($stmt->execute()) {
+	
+			$result = $stmt->get_result();
+	
+			if (($result) && ($result->num_rows != 0)) {
+		
+				echo "<table border=\"1px solid black\">";
+				echo "<tr><th> '$type' </th></tr>";
+	
+				while ($row = $result->fetch_row()) {
+					echo "<tr>";
+					echo "<td>".$row[0]."</td>";
+					echo "</tr>";
+				} 
+			
+		
+				echo "</table>";
+				
+			}	else {
+	
+				echo "No record found";
+	
 			}
-			// close table
-			echo "</table>";
+	
+			$result->free_result();
+		
+		} else {
+	
+			
+			echo "Execute failed.<br>";
+		}
+	
+		$stmt->close();
+	
+		} else {
+	
+		echo "Prepare failed.<br>";
+		$error = $conn->errno . ' ' . $conn->error;
+		echo $error; 
+		}
+	
+	}
+	
+	$conn->close();
 
-
-   // close the connection opened by open.php
-   $conn->close();
 ?>
 </body>

@@ -2,37 +2,76 @@
 
 <body>
 <?php
-    //open a connection to dbase server
-	//this will require an updated conf.php with appropriate credentials
+
 	include 'open.php';
 
-        // prepare the query statement
-        //we'll soon see how to upgrade our queries so they aren't plain strings
-        echo "<h2>Query 12 Results Page</h2>";
-        echo "<h3>Show how many Netflix movies were added in months that had over 250,000 daily cases in the US
-
-        </h3>";
-        // execute it, and if non-empty result, output each row of result
-        if ($result = $conn->query("CALL Query_12();")) {
-                echo "<table border=\"2px solid black\">";
-                echo "<tr><td> Number of movies added </td>";
-                foreach($result as $row){
-                        echo "<tr>";
-                        echo "<td>".$row["showcount"]."</td>";
-                        echo "</tr>";
+	
 
 
-                }
-                echo "</table>";
+	ini_set('error_reporting', E_ALL);
+	ini_set('display_errors', true);
 
-        }
-        else{ 
-                echo "Call to Query_12 failed<br>";
-        }
+	$num = $_POST['number'];
 
-        //close the connection opened by open.php since we no longer need access to dbase
-        $conn->close();
+	echo "<h2>Show how many Netflix movies were added in months that had over $num the daily cases in the US
+        </h2><br>";
 
+	if (empty($num)) {
+		echo "empty <br><br>";
+	
+	} else {
+	
+		echo $num."<br><br>";
+	
+		if ($stmt = $conn->prepare("CALL Query_12(?)")) {
+	
+
+		$stmt->bind_param("i", $num);
+	
+		if ($stmt->execute()) {
+	
+			$result = $stmt->get_result();
+	
+			if (($result) && ($result->num_rows != 0)) {
+		
+				echo "<table border=\"1px solid black\">";
+				echo "<tr><th>  Number of movies added</th></tr>";
+	
+				while ($row = $result->fetch_row()) {
+					echo "<tr>";
+					echo "<td>".$row[0]."</td>";
+					echo "</tr>";
+				} 
+				echo "</table>";
+				
+			}	else {
+		
+				echo "No record found for the specified country";
+	
+			}
+	
+			$result->free_result();
+		
+		} else {
+	
+	
+			echo "Execute failed.<br>";
+		}
+	
+		$stmt->close();
+	
+		} else {
+	
+		echo "Prepare failed.<br>";
+		$error = $conn->errno . ' ' . $conn->error;
+		echo $error; 
+		}
+	
+	}
+	
+	$conn->close();
+
+ 
 ?>
 </body>
 

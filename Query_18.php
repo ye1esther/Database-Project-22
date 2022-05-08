@@ -2,37 +2,74 @@
 
 <body>
 <?php
-    //open a connection to dbase server
-	//this will require an updated conf.php with appropriate credentials
+
 	include 'open.php';
 
-        // prepare the query statement
-        //we'll soon see how to upgrade our queries so they aren't plain strings
-        echo "<h2>Query 18 Results Page</h2>";
-        echo "<h3>Show how many Netflix TVShows were added to NETFLIX in a month that had maximum deaths per million due to COVID-19 in 2020, South Korea
-        </h3>";
-        // execute it, and if non-empty result, output each row of result
-        if ($result = $conn->query("CALL Query_18();")) {
-                echo "<table border=\"2px solid black\">";
-                echo "<tr><td> Month</td><td> Number of Shows added to Netflix</td><td> new deaths per million </td>";
-                foreach($result as $row){
-                        echo "<tr>";
-                        echo "<td>".$row["month"]."</td>";
-                        echo "<td>".$row["showcount"]."</td>";
-                        echo "<td>".$row["ndp"]."</td>";
-                        echo "</tr>";
+	ini_set('error_reporting', E_ALL);
+	ini_set('display_errors', true);
 
+	$country = $_POST['country'];
 
-                }
-                echo "</table>";
+	echo "<h2>Show how many Netflix TVShows were added to NETFLIX in a month that had maximum deaths per million due to COVID-19 in 2020 in $country
+        </h2><br>";
 
-        }
-        else{ 
-                echo "Call to Query_18 failed<br>";
-        }
+	if (empty($country)) {
+		echo "empty <br><br>";
+	
+	} else {
+	
+		echo $country."<br><br>";
+	
+	
+		if ($stmt = $conn->prepare("CALL Query_18(?)")) {
+	
+		$stmt->bind_param("s", $country);
+	
+		if ($stmt->execute()) {
+	
+			$result = $stmt->get_result();
+	
+			if (($result) && ($result->num_rows != 0)) {
+		
+				echo "<table border=\"1px solid black\">";
+                                echo "<tr><td> Month</td><td> Number of Shows added to Netflix</td><td> new deaths per million </td>";
+	
+				while ($row = $result->fetch_row()) {
+					echo "<tr>";
+					echo "<td>".$row[0]."</td>";
+                                        echo "<td>".$row[1]."</td>";
+                                        echo "<td>".$row[2]."</td>";
+					echo "</tr>";
+				} 
+			
+		
+				echo "</table>";
+				
+			}	else {
+				echo "No record found for the specified country";
+	
+			}
+	
+			$result->free_result();
+		
+		} else {
+	
+			echo "Execute failed.<br>";
+		}
+	
+		$stmt->close();
+	
+		} else {
+	
+		echo "Prepare failed.<br>";
+		$error = $conn->errno . ' ' . $conn->error;
+		echo $error; 
+		}
+	
+	}
+	
+	$conn->close();
 
-        //close the connection opened by open.php since we no longer need access to dbase
-        $conn->close();
 
 ?>
 </body>

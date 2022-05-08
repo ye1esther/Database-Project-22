@@ -2,28 +2,77 @@
 <body>
 <?php
 
-	//open a connection to dbase server 
+
 	include 'open.php';
 
-	// echo some basic header info onto the page
-	echo "<h2>What was the average quarterly net income of Netflix in 2021?</h2><br>";
+
+	ini_set('error_reporting', E_ALL);
+	ini_set('display_errors', true);
+
+	$year= $_POST['year'];
+
+	echo "<h2>Show what was the average quarterly net income of Netflix in the given year $year? (DECIMAL 2 PT CAST)
+	</h2><br>";
 
 
-       // call the stored procedure we already defined on dbase
-	   	$result = $conn->query("CALL Query_14();");
+	if (empty($year)) {
+		echo "empty <br><br>";
+	
+	} else {
+	
+		echo $year."<br><br>";
+	
+	
+		if ($stmt = $conn->prepare("CALL Query_14(?)")) {
+	
 
-			echo "<table border=\"2px solid black\">";
-			echo "<tr><td>Average Quarterly Net Income</td></tr>";
-			foreach($result as $row){
-			echo "<tr>";
-			echo "<td>".$row["Average quarterly net income"]."</td>";
-			echo "</tr>";
+		$stmt->bind_param("s", $year);
+	
+		if ($stmt->execute()) {
+	
+			$result = $stmt->get_result();
+	
+			if (($result) && ($result->num_rows != 0)) {
+		
+				echo "<table border=\"1px solid black\">";
+				echo "<tr><th> Average Quarterly Net Income </th></tr>";
+	
+				while ($row = $result->fetch_row()) {
+					echo "<tr>";
+					echo "<td>".$row[0]."</td>";
+					echo "</tr>";
+				} 
+			
+		
+				echo "</table>";
+				
+			}	else {
+	
+				echo "No record found for the specified country";
+	
 			}
-			// close table
-			echo "</table>";
+	
+			$result->free_result();
+		
+		} else {
+	
+		
+			echo "Execute failed.<br>";
+		}
+	
+		$stmt->close();
+	
+		} else {
+	
 
+		echo "Prepare failed.<br>";
+		$error = $conn->errno . ' ' . $conn->error;
+		echo $error; 
+		}
+	
+	}
+	
+	$conn->close();
 
-   // close the connection opened by open.php
-   $conn->close();
 ?>
 </body>
