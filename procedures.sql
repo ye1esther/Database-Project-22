@@ -40,12 +40,13 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_3;
 
-CREATE PROCEDURE Query_3()
+CREATE PROCEDURE Query_3(IN yr INT(4))
 BEGIN
     SELECT filing_quarter_id
     FROM Financial
-    WHERE earnings_per_share = (SELECT MAX(earnings_per_share) FROM Financial)
-            AND filing_quarter_id > '2021-01-01 00:00:00' AND filing_quarter_id < '2021-12-31 00:00:00';
+    WHERE earnings_per_share = (SELECT MAX(earnings_per_share) FROM Financial 
+                                WHERE YEAR(filing_quarter_id) LIKE CONCAT("%", yr, "%"))
+            AND YEAR(filing_quarter_id) LIKE CONCAT("%", yr, "%");
 END; //
 
 DELIMITER ;
@@ -82,11 +83,11 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_5;
 
-CREATE PROCEDURE Query_5()
+CREATE PROCEDURE Query_5(IN yr INT(4))
 BEGIN
     SELECT rating, COUNT(show_id) AS 'Number of Shows'
     FROM Content
-    WHERE release_year = 2019 AND type LIKE '%Movie%'
+    WHERE release_year LIKE CONCAT("%", yr, "%") AND type LIKE '%Movie%'
     GROUP BY rating
     ORDER BY COUNT(show_id) DESC
     LIMIT 5;
@@ -115,12 +116,14 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_7;
 
-CREATE PROCEDURE Query_7()
+CREATE PROCEDURE Query_7(IN c VARCHAR(30))
 BEGIN
     SELECT MONTH(record_date)
     FROM Covid
-    WHERE new_deaths_per_million = (SELECT MAX(new_deaths_per_million) FROM Covid WHERE country LIKE '%United States%')
+    WHERE new_deaths_per_million = (SELECT MAX(new_deaths_per_million) FROM Covid WHERE country LIKE CONCAT("%", c, "%")
+                                    AND record_date > '2021-01-01 00:00:00' AND record_date < '2021-12-31 00:00:00')
     AND record_date > '2021-01-01 00:00:00' AND record_date < '2021-12-31 00:00:00'
+    AND country LIKE CONCAT("%", c, "%")
     ORDER BY MONTH(record_date) ASC;
 END; //
 
@@ -162,7 +165,7 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_9;
 
-CREATE PROCEDURE Query_9()
+CREATE PROCEDURE Query_9(IN yr INT(4))
 BEGIN
     DROP VIEW IF EXISTS MINUTE; 
     CREATE VIEW MINUTE AS 
@@ -170,10 +173,10 @@ BEGIN
     From Content
     WHERE type LIKE '%Movie%');
     
-    SELECT title
+    SELECT title, duration
     FROM MINUTE
-    WHERE duration = (SELECT MAX(duration) FROM MINUTE WHERE release_year = 2021 AND type LIKE '%Movie%')
-    AND release_year = 2021
+    WHERE duration = (SELECT MAX(duration) FROM MINUTE WHERE release_year LIKE CONCAT("%", yr, "%") AND type LIKE '%Movie%')
+    AND release_year LIKE CONCAT("%", yr, "%")
     ORDER BY title ASC;
 END; //
 
@@ -202,11 +205,11 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_11;
 
-CREATE PROCEDURE Query_11()
+CREATE PROCEDURE Query_11(IN c VARCHAR(30))
 BEGIN
     SELECT COUNT(show_id)
     FROM Content 
-    WHERE released_country LIKE '%France' AND release_year = 2020; 
+    WHERE released_country LIKE CONCAT("%", c, "%") AND release_year = 2020; 
 END; //
 
 DELIMITER ;
@@ -242,16 +245,16 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_13;
 
-CREATE PROCEDURE Query_13()
+CREATE PROCEDURE Query_13(IN c VARCHAR(30))
 BEGIN
    WITH selected_month AS (
    SELECT DISTINCT(MONTH(record_date)) AS Month_over, country 
    FROM Covid 
-   WHERE country LIKE '%France%' AND YEAR(record_date) = '2020' AND new_case > 8000) 
+   WHERE country LIKE CONCAT("%", c, "%") AND YEAR(record_date) = '2020' AND new_case > 8000) 
    
    SELECT MONTH(date_added) AS 'month added to Netflix', COUNT(show_id) as 'number of TV shows' 
    FROM Content, selected_month
-   WHERE Content.type LIKE '%TV Show%' AND released_country LIKE '%FRANCE%' AND Year(date_added) = '2020' AND Month(date_added) = Month_over
+   WHERE Content.type LIKE '%TV Show%' AND released_country LIKE CONCAT("%", c, "%") AND Year(date_added) = '2020' AND Month(date_added) = Month_over
    GROUP BY MONTH(date_added)
    ORDER BY MONTH(date_added) ASC; 
 END; //
@@ -277,13 +280,13 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_15 //
 
-CREATE PROCEDURE Query_15()
+CREATE PROCEDURE Query_15(IN yr INT(4))
 
 BEGIN
 
       SELECT released_country AS country, COUNT(show_id) AS showcount
       FROM Content
-      WHERE Content.type LIKE '%TV Show%' AND release_year = 2020
+      WHERE Content.type LIKE '%TV Show%' AND release_year LIKE CONCAT("%", yr, "%")
       GROUP BY released_country 
       ORDER BY COUNT(show_id) DESC, country ASC
       LIMIT 5;
@@ -312,14 +315,14 @@ DELIMITER ;
 DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_17 //
-CREATE PROCEDURE Query_17()
+CREATE PROCEDURE Query_17(IN c VARCHAR(30))
 BEGIN
 
 
         SELECT AVG(new_case) AS average
         FROM Covid
         WHERE MONTH(record_date) = 12 AND YEAR(record_date) = 2021
-              AND country LIKE '%Italy%';
+              AND country LIKE CONCAT("%", c, "%");
 
 
 END; // 
@@ -360,7 +363,7 @@ DELIMITER //
 
 DROP PROCEDURE IF EXISTS Query_19;
 
-CREATE PROCEDURE Query_19()
+CREATE PROCEDURE Query_19(IN num INT(10))
 BEGIN
     DROP VIEW IF EXISTS MINUTE; 
     CREATE VIEW MINUTE AS 
@@ -371,13 +374,13 @@ BEGIN
     WITH Covid_record AS (
             SELECT DISTINCT record_date
             FROM Covid
-            WHERE new_case > 10000 AND country LIKE '%Japan%'
+            WHERE new_case > num AND country LIKE '%Japan%'
             )
     
-    SELECT title, date_added, duration
+    SELECT title, duration
     FROM MINUTE, Covid_record
     WHERE duration = (SELECT MIN(duration) FROM MINUTE WHERE MINUTE.date_added = Covid_record.record_date)
-            AND MINUTE.date_added = Covid_record.record_date
+            AND MINUTE.date_added = Covid_record.record_date 
     ORDER BY duration ASC
     LIMIT 5;
 END; //

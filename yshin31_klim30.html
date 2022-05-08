@@ -16,12 +16,14 @@
 
 	<h3>Project Data Overview</h3>
 	<h4>To better understand the data our project is using, click the button below</h4>
-	<button onclick="location.href='overview.html'">
-		Click 
-	</button>
+	<button onclick="location.href='overview.html'"> Click </button><br>
+	<br>
 
 	<h2> Query 1</h2>
 	<h3>Show How many Netflix shows were released in 2020 that were released by Netflix in the given country</h3>
+	<ul>
+		<li>Country: Country where the record was collected from. First letter of the country should be upper-case: United States </li>
+	  </ul>
 	
 	<form action="Query_1.php" method="post">
 	<br>
@@ -39,24 +41,42 @@
 	<form action="Query_2.php" method="post">
 		<input type="submit" value="show">
 	</form>
+	<br>
 
 	<h2> Query 3</h2>
-	<h3> Show which quarter of the given year did Netflix record the highest earnings per share or highest revenue</h3>
+	<h3> Show which quarter of the given year (2019/2020/2021) did Netflix record the highest earnings per share or highest revenue</h3>
 	<form action="Query_3.php" method="post">
+	<br>
+		<select name="year" id="year">
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+		  </select>
+		<br>
+		<br>
 		<input type="submit" value="show">
 	</form>
+	<br>
 
 	<h2> Query 4</h2>
 	<h3> Show which country produced the most number of Netflix TV shows when the number of worldwide new daily Covid-19 cases was greater than given number ( > 10,000 cases) </h3>
 	<form action="Query_4.php" method="post">
 		<input type="submit" value="show">
 	</form>
+	<br>
 
 	<h2> Query 5</h2>
 	<h3> Show what was the most prevalent TV rating of Netflix movies that were released in the given year</h3>
+	<ul>
+		<li>Year: the oldest movie was released in 1942</li>
+	</ul>
 	<form action="Query_5.php" method="post">
+		<input type="text" name="year" placeholder="year">
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
+	<br>
 
 	<h2> Query 6</h2>
 	<h3> Show what was the total net income/revenue/R&D expense of Netflix in the first two quarters of 2020</h3>
@@ -66,7 +86,15 @@
 
 	<h2> Query 7</h2>
 	<h3>Show in which month(s) of 2021 did the given country record the highest number of deaths per million people</h3>
+	<ul>
+		<li>Country: Country where the record was collected from. First letter of the country should be upper-case: United States.
+			You can also type in World if you wish to not specify a country. </li>
+	  </ul>
 	<form action="Query_7.php" method="post">
+		<br>
+		<input type="text" name="country" placeholder="country">
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
 
@@ -77,8 +105,14 @@
 	</form>
 
 	<h2> Query 9</h2>
-	<h3> What are the titles of a Netflix movie with the longest duration that was released in the given year</h3>
+	<h3> What are the title(s) of a Netflix movie with the longest duration that was released in the given year</h3>
+	<ul>
+		<li>Year: the oldest movie was released in 1942</li>
+	</ul>
 	<form action="Query_9.php" method="post">
+		<input type="text" name="year" placeholder="year">
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
 
@@ -89,8 +123,15 @@
 	</form>
 
 	<h2> Query 11</h2>
-	<h3> How many movies were released in 2020 that were produced in the given country</h3>
+	<h3> How many movies were released in 2020 in the given country</h3>
+	<ul>
+		<li>Country: Country where the movie was released in. First letter of the country should be upper-case: United States. </li>
+	</ul>
 	<form action="Query_11.php" method="post">
+		<br>
+		<input type="text" name="country" placeholder="country">
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
 
@@ -102,7 +143,14 @@
 
 	<h2>Query 13</h2>
 	<h3>Show how many Netflix TVshows were added to Neflix in a month that had over 8,000 daily cases in the given country in 2020 </h3>
+	<ul>
+		<li>Country: Country where the record was collected from. </li>
+	</ul>
 	<form action="Query_13.php" method="post">
+		<br>
+		<input type="text" name="country" placeholder="country">
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
 
@@ -115,6 +163,14 @@
 	<h2> Query 15</h2>
 	<h3> Show Which country released the most number of TV shows in the given year? List the name of the country and the number of TV shows they released</h3>
 	<form action="Query_15.php" method="post">
+		<br>
+		<select name="year" id="year">
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+		  </select>
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
 
@@ -126,7 +182,15 @@
 
 	<h2> Query 17</h2>
 	<h3>  Show what was the average number of COVID-19 daily new cases in the given country in December of 2021</h3>
+	<ul>
+		<li>Country: Country where the record was collected from. First letter of the country should be upper-case: United States.
+			You can also type in World if you wish to not specify a country. </li>
+	  </ul>
 	<form action="Query_17.php" method="post">
+		<br>
+		<input type="text" name="country" placeholder="country">
+		<br>
+		<br>
 		<input type="submit" value = "show">
 	</form>
 
@@ -137,8 +201,15 @@
 	</form>
 
 	<h2> Query 19</h2>
-	<h3> Show what is the title of a Netflix movie with the shortest duration that was added to Netflix when COVID-19 daily cases in Japan was over the given number (> 10,000)</h3>
+	<h3> Show what is the title of a Netflix movie with the shortest duration that was added to Netflix when COVID-19 daily cases in Japan was over the given number (> 0)</h3>
+	<ul>
+		<li> The given number should be a positive integer greater 0. No data on the graph means there was no date when COVID-19 daily cases in Japan was over the given number </li>
+	</ul>
 	<form action="Query_19.php" method="post">
+		<br>
+		<input type="text" name="number" placeholder="Number of Cases">
+		<br>
+		<br>
 		<input type="submit" value = "show">
     
    </body>
