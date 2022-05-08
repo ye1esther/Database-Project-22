@@ -8,15 +8,16 @@
 	//construct an array in which we'll store our data
 	$dataPoints = array();
     $country = $_POST['country'];
+	$type = $_POST['type'];
 
 	//we'll soon see how to upgrade our queries so they aren't plain strings
-	$sql = "SELECT new_case, record_date FROM Covid WHERE country = '$country'";
+	$sql = "SELECT record_date, $type as c FROM Covid WHERE country = '$country'";
 
 	//execute the query, then run through the result table row by row to
 	//put each row's data into our array
 	if ($result = mysqli_query($conn,$sql)){	  
 	   foreach($result as $row){
-	      array_push($dataPoints, array( "label"=> $row["record_date"], "y"=> $row["new_case"]));
+	      array_push($dataPoints, array( "label"=> $row["record_date"], "y"=> $row["c"]));
 	   }
 	}
 
