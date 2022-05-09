@@ -1,21 +1,45 @@
 
 
-## Members - the names and JHEDs of the group members who worked on this project
+## 1. Members - 
+Yewon Shin (yshin31) 
+Kyoungjin Lim (klim30) 
 
-## Modifications - briefly summarize any changes you made to your project after selecting a
-domain and list of questions in Phase A (did you change subject domains due to lack of
-data? did you replace questions from your original list of 15, or expand the list? did you
-pull in an additional data source to enrich the project?)
+## 2. Modifications - 
 
-## Process - an (updated, if necessary) version of process.txt from Phase C, explaining your
-data sources and how you cleaned and prepared the data for insertion into your database
+We made several modifications to the list of questions in Phase A. In Phase A, we didn’t process data yet, so some questions didn’t fully account for our processed data. For example, some questions ask about a specific date when the content was released. However, we only had information about the release year in our Contents data. We rephrased these questions to ask about a date when the content was added to Netflix, as we have it in the processed data. Also, when writing SQL queries in Phase D, we noticed that some queries asking maximum or minimum values might have multiple tuples having the same value. We realized the need for ordering specifications, so we added details about ordering results based on ascending or descending order of other fields. For the purpose of formatting, we have required some queries to present results in two decimal places. 
 
-## Successes - describe 2-3 technical portions of your project about which you’d like to brag a
-little (for example, what was a particularly challenging aspect of writing your database that
-you’d like to highlight so the course staff don’t overlook its complexity?)
+In this phase, we made some modifications to questions as well. We wanted to utilize Canvas JS, but the majority of our questions were expecting a single answer such as maximum or minimum value. Instead of presenting a single result, we modified questions to show the top 5 values. This way, we were able to use bar graphs from CanvasJS to represent results. 
 
-## Known Issues - a description of places in the implementation of your project, if any, where
-you did not fully succeed (are there bugs? are there unimplemented features?)
 
-## Extensions - beyond fixing any known issues mentioned above, what additional functionality
-do you most wish you had time to add to your project? Describe at least two new features.
+## 3. Process 
+Process.txt has not changed since Phase C. 
+
+## 4. Successes 
+
+- Complex SQL queries 
+Our questions required complex subqueries, as it tries to relate Covid to contents in Netflix. Most of our queries require a subquery that extracts the maximum value record from the Covid table. Relating this subquery to the main query to extract meaningful results was a challenging technical problem. 
+
+- Input Validation
+When collecting user input to insert and delete specific tuples from tables, users should enter data in an appropriate format. Our data includes various data types including decimal, string, and DateTime. We were not familiar with input validation methods in HTML, so it was a challenging technical problem. We used a regex pattern to match user input to the specific pattern that we are looking for from the user input. We generated appropriate error messages to let users know what was the problem in their input. 
+
+- Error Handling in Delete operation	
+We noticed that there may be a case where a user tries to delete a record that does not exist in the database. Before handling this error, our HTML response would say that the record was successfully deleted from the database. We checked if the record that the user tries to delete exists in the database by running a separate validation query in delete PHP files. We haven’t encountered such a scenario in the previous homework, so it was also another challenging technical problem. 
+
+- Overview Page
+We created an overview page where a user can overview our data and thus better understand our project. There, we implemented some line charts for users to overview what kind of data our project is using before looking at the results of our queries. For example, a user view the covid data by typing in a country name and see the change in the number of new cases,  total cases, or deaths per million since COVID-19 became a pandemic.
+
+
+## Known Issues 
+We encountered several bugs, but we managed to solve all that we encountered. As mentioned above, error handling in delete operation is an example. We tested insert/delete operation by manually testing several cases and checking back on the database to see if the data is inserted/deleted properly. For example,  All of the features specified in Phase E, except for user access control, are implemented successfully. 
+
+
+## Extensions
+
+- More Variety of Visualization
+We noticed that only the bar graph visualization can best represent our queries. There were many other visualization options on Canvasjs.com such as line graphs and pie charts that we found difficult to use for our queries. 
+
+- Real-time COVID-19 Update
+Our covid data was retrieved from the database that is updated on a daily basis. Although we had modification page where a user can directly add data to the covid table but if given the functionality of auto-update, we thought our data would be always up-to-date and thus more useful.
+
+- More Input Options for Users 
+We thought adding more input options for each query for users was another functionality that we would wish to add to our project if given time. For example, we only ask users to choose either release_year or released_country for some queries using Content data. With this functionality, we could have asked our users to choose both release_year and released_country of the content and retrieve more detailed data they wish to see. Similarly, for Covid data, we could have allowed user to give country of their interest and number of cases to see if the country has ever had number of new cases over the given number. 
