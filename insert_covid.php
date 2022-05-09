@@ -10,10 +10,11 @@
     $sql = "INSERT INTO Covid(country, record_date, total_case, new_case, new_deaths_per_million, record_id)
     VALUES (?,?,?,?,?,?);";
 
+    
     $sql2 = "INSERT INTO Influenced_by
                SELECT Content.show_id, Covid.record_id
                FROM Content, Covid
-               WHERE Covid.record_id LIKE CONCAT('%',?,'%') AND Covid.record_id LIKE CONCAT('%', Content.released_country, '%');";
+               WHERE Covid.record_id LIKE CONCAT('%',?,'%') AND Content.released_country LIKE CONCAT('%',Covid.country,'%');";
     
     include 'open.php';
 
