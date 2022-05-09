@@ -6,24 +6,34 @@
     $net_income = $_POST['net_income'];
     $earnings_per_share = $_POST['earnings_per_share'];
     $sql = "INSERT INTO Financial(filing_quarter_id, revenue, rd_expense, net_income, earnings_per_share)
-    VALUES ('$filing_quarter_id', '$revenue', '$rd_expense', '$net_income', '$earnings_per_share');";
+    VALUES (?,?,?,?,?);";
 
+    include 'open.php';
 
     if (!empty($filing_quarter_id) || !empty($revenue) || !empty($rd_expense) || !empty($net_income) || !empty($earnings_per_share)) {
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param("sssss", $filing_quarter_id,$revenue,$rd_expense,$net_income,$earnings_per_share); 
+            if ($stmt->execute()) {
+                echo "inserted successfully to Financial table";
 
-        //open a connection to dbase server 
-        include 'open.php';
+            } else { 
+                echo "insertion unsuccessful";
+            }
 
-        if ($conn->query($sql)) {
-            echo "Inserted Data Successfully!";
-        } else {
-            echo "ERROR: ".$sql."<br>".$conn->error;
+        } else { 
+            echo "Prepare failed.<br>";
+            $error = $conn->errno . ' ' . $conn->error;
+            echo $error; 
         }
 
-        $conn->close();
-
-    // if one of the fields was empty
+        $stmt->close();
     } else {
         echo "All fields are required";
         die();
     }
+
+    $conn->close();
+
+
+?>
+</body>

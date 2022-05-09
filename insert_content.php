@@ -19,33 +19,47 @@
         die();
     }
 
+
+    include 'open.php'; 
+
     $sql = "INSERT INTO Content(show_id, type, title, released_country, date_added, release_year, rating, duration)
-    VALUES ('$show_id', '$type', '$title', '$released_country', '$date_added', '$release_year', '$rating', '$duration');";
+    VALUES (?,?,?,?,?,?,?,?);";
 
     $sql2 = "INSERT INTO Influenced_by
                 SELECT Content.show_id, Covid.record_id
                 FROM Content, Covid
-                WHERE show_id = '$show_id' AND Content.released_country = Covid.country;";
+                WHERE show_id LIKE CONCAT('%',?,'%')AND Content.released_country = Covid.country;";
 
     if (!empty($show_id) || !empty($type) || !empty($title) || !empty($released_country) || !empty($date_added)
     || !empty($release_year) || !empty($rating) || !empty($duration)) {
 
-        //open a connection to dbase server 
-        include 'open.php';
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param("ssssssss", $show_id, $type, $title, $released_country,$date_added, $release_year, $rating, $duration);
 
-        if ($conn->query($sql) && $conn->query($sql2)) {
-            echo "Inserted Data Successfully!";
-        } else {
-            echo "ERROR: ".$sql."<br>".$conn->error;
+            if ($stmt->execute()) {
+                
+                echo "inserted successfully to Content table";
+                $stmt2 = $conn->prepare($sql2);
+                $stmt2->bind_param("s", $show_id); 
+                $stmt2->execute();
+
+            } else { 
+                echo "Prepare failed.<br>";
+		        $error = $conn->errno . ' ' . $conn->error;
+		        echo $error; 
+            }
+        }else { 
+            echo "Execute failed.<br>";
         }
+		$stmt->close();
+        $stmt2->close();
 
-        $conn->close();
-
-    // if one of the fields was empty
     } else {
         echo "All fields are required";
         die();
     }
 
+    $conn->close();
 
-   
+?>
+</body>

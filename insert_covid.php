@@ -8,28 +8,50 @@
     $date = substr($record_date,0,10);
     $record_id = $country." ".$date;
     $sql = "INSERT INTO Covid(country, record_date, total_case, new_case, new_deaths_per_million, record_id)
-    VALUES ('$country', '$record_date', '$total_case', '$new_case', '$new_deaths_per_million', '$record_id');";
+    VALUES (?,?,?,?,?,?);";
 
     $sql2 = "INSERT INTO Influenced_by
                SELECT Content.show_id, Covid.record_id
                FROM Content, Covid
-               WHERE Covid.record_id LIKE CONCAT('%','$record_id','%') AND Content.released_country = Covid.country;";
+               WHERE Covid.record_id LIKE CONCAT('%',?,'%') AND Covid.record_id LIKE CONCAT('%', Content.released_country, '%');";
+    
+    include 'open.php';
+
     if (!empty($country) || !empty($record_id) || !empty($total_case) || !empty($new_case) || !empty($new_deaths_per_million)
     || !empty($record_id) ) {
 
-        //open a connection to dbase server 
-        include 'open.php';
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param("ssssss", $country, $record_date, $total_case, $new_case, $new_deaths_per_million, $record_id);
 
-        if ($conn->query($sql) && $conn->query($sql2)) {
-            echo "Inserted Data Successfully!";
-        } else {
-            echo "ERROR: ".$sql."<br>".$conn->error;
+            if ($stmt->execute()) {
+                
+                echo "inserted successfully to Covid table";
+                $stmt2 = $conn->prepare($sql2);
+                $stmt2->bind_param("s", $record_id); 
+                if ($stmt2->execute()) { 
+                    echo "inserted to Influenced by";
+                } else { 
+                    echo "inserted to Infleunced by unsuccessful";
+                }
+                
+
+            } else { 
+                echo "insertion unsuccessful";
+            }
+        }else { 
+            echo "Execute failed.<br>";
         }
+		$stmt->close();
+        $stmt2->close();
 
-        $conn->close();
-
-    // if one of the fields was empty
     } else {
-        echo "All fields are required";
-        die();
+        echo "Prepare failed.<br>";
+		$error = $conn->errno . ' ' . $conn->error;
+		echo $error; 
     }
+
+
+    $conn->close();
+
+?>
+</body>
