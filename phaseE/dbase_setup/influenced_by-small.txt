@@ -1,0 +1,12 @@
+s1, United States 2021-01-09
+s1301, United States 2021-06-18
+s6887, United States 2021-05-01
+s956, France 2021-10-07
+s1498, Philippines 2020-06-16
+s2688, Nigeria 2020-04-30
+s2946, Japan 2020-06-27
+s1896, Australia 2020-11-08
+s3047, Mexico 2020-04-24
+s1326, Sweden 2021-04-28
+s284, Belgium 2021-03-28
+s2414, India 2020-03-27
