@@ -7,8 +7,10 @@
     //Collect the posted value in a variable 
     $country = $_POST['country'];
     $record_date = $_POST['record_date'];
-    $sql = "DELETE FROM Covid WHERE country = '$country' AND record_date = '$record_date'";
-    $sql2 = "DELETE FROM Influenced_by WHERE record_id = (SELECT record_id FROM Covid WHERE country = '$country')";
+    $date = substr($record_date,0,10);
+    $record_id = $country." ".$date;
+    $sql = "DELETE FROM Covid WHERE country = '$country' AND record_date LIKE CONCAT('%', '$record_date', '%')";
+    $sql2 = "DELETE FROM Influenced_by WHERE record_id LIKE CONCAT('%', '$record_id', '%')";
 
     //Override the PHP configuration file to display all errors
 	//This is useful during development but generally disabled before release
@@ -34,7 +36,7 @@
             echo "Deleted Data Successfully in Covid! <br><br>";
 
             if ($stmt2 = $conn->prepare($sql2)) {
-                    
+                
                 //Run the actual query
                 if ($stmt2->execute()) {
 
