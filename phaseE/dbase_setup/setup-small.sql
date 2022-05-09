@@ -50,18 +50,18 @@ Create Table Influenced_by_small (
 
         
 LOAD DATA LOCAL INFILE 
- './dbase_setup/quarterly_income_statement-small.txt' 
+ './quarterly_income_statement-small.txt' 
         into table Financial_small fields terminated by ',';
  
 LOAD DATA LOCAL INFILE 
-  './dbase_setup/covid-small.txt' 
+  './covid-small.txt' 
         into table Covid_small fields terminated by ',';
         
         
 LOAD DATA LOCAL INFILE 
- './dbase_setup/netflix-small.txt' 
+ './netflix-small.txt' 
         into table Content_small fields terminated by ',';
         
 LOAD DATA LOCAL INFILE 
- './dbase_setup/influenced_by-small.txt'
+ './influenced_by-small.txt'
         into table Influenced_by_small fields terminated by ',';

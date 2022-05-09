@@ -52,19 +52,19 @@ Create Table Influenced_by (
   
 
 LOAD DATA LOCAL INFILE 
- './dbase_setup/quarterly_income_statement.txt' 
+ './quarterly_income_statement.txt' 
         into table Financial fields terminated by ',';
  
 LOAD DATA LOCAL INFILE 
-  './dbase_setup/covid.txt' 
+  './covid.txt' 
         into table Covid fields terminated by ',' ;
         
         
 LOAD DATA LOCAL INFILE 
- './dbase_setup/netflix.txt' 
+ './netflix.txt' 
         into table Content fields terminated by ';';
         
         
 LOAD DATA LOCAL INFILE 
- './dbase_setup/influenced_by.txt' 
+ './influenced_by.txt' 
         into table Influenced_by fields terminated by ',';
