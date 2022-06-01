@@ -1,12 +1,22 @@
-# Spring-22-Database-Project
+# Database Project Spring 2022
+
+## You can access our project using this link: https://ugrad.cs.jhu.edu/~yshin31/yshin31_klim30/public_html/yshin31_klim30.html
 
 
-### partners 
+### Partners 
 - Yewon Shin (yshin31) 
 - Kyoungjin Lim(klim30) 
 
+### Domain
+As for the domain of our project, the topics of our interests included video production in the streaming services industry, financial statements, and Covid-19. We chose Netflix as the representative streaming and production services company. We have found these three databases online for our project:  Netflix dataset has Netflix contents data that includes unique id, type, title, Release year, country, date added to Netflix, rating, and duration. The Netflix financial dataset has fields related to the financial status of Netflix, such as net income, revenue, earnings per share, and gross profit, on a quarterly basis. The worldwide COVID-19 dataset has various fields regarding COVID-19, such as newly confirmed cases, the number of deaths related to COVID-19, in a daily interval for most country in the world.
 
-### List any changes / issues encountered 
+### Purpose
+The purpose of our database was to find the relationship between covid/netflix revenue/netflix production. Before looking into the results of our written queries, we hypothesized that Netflix benefited from the pandemic. This thought was based on the fact that people had to do social distancing and spend more time in indoor activities which include watching TV shows/movies.
+
+### Conclusion
+Netflix revenue kept increasing from 2020-2022, so we thought the number of new shows and movies would also have increased. However, Netflix’s content production had no significant change in amount. Instead, we noticed a significant increase in revenue. We think this is possibly due to the increased number of Netflix subscribers or increased screentime. There were up-and-downs in net income but this could be due to the increased R&D expense over time which means Netflix has been investing more and more in content production. As expected, most shows were produced and released in the United States where Netflix is based on. 
+
+### Any changes / issues encountered 
 #### 1. txt file formatting using ; for netflix data
 Within the ‘title’ column of netflix, there were some content names that include ‘,’. We were using ‘,’ to separate data fields in our txt files, so when initiating it as a table on the database, data was not inserted properly. Instead of ‘,’, we decided to use ‘;’ to separate data fields. 
 #### 2. primary key changed for covid data 
